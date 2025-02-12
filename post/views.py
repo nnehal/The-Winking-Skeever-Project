@@ -4,4 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    return render(request, 'post/index.html')
+    return render(request, "post/index.html")
+
+def schedule(request):
+    return render(request, "post/schedule.html")
