@@ -2,9 +2,10 @@ from django.db import models
 
 # Create your models here.
 class PDFDocument(models.Model):
-    description = models.CharField(max_length=255, blank=True)
-
+    Description = models.CharField(max_length=255, blank=True)
     # change pdf file location
-    pdf_file = models.FileField(upload_to='pdfs/')
+    PDF = models.FileField(upload_to='pdf/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.Description

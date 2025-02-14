@@ -13,10 +13,11 @@ def schedule(request):
 def post_schedule(request):
     if request.method == "POST":
         form = PDFDocumentForm(request.POST, request.FILES)
-        form.save()
-        return ("Upload Success")
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Successfully posted!!")
     else:
         form = PDFDocumentForm()
 
-    return render(request, "index.html", {'forms': form})
+    return render(request, "post/post_pdf.html", {'form': form})
     
