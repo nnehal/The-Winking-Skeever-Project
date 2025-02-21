@@ -1,0 +1,7 @@
+{% extends "employee/base.html" %}
+{% block content %}
+    {% csrf_token %}
+    <form method="POST">
+        {{form.as_p}}
+    </form>
+{% endblock content %}
