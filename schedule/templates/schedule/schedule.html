@@ -1,8 +1,7 @@
 {% extends "post/index.html" %}
 {% load static %}
 {% block content %}
-    <h1>Your schedule will be here soon!</h1>
-    {% for item in photo %}
-        <p>{{item.PDF_file}}</p>
-    {% endfor %}
+    <div>
+        <a href="{{ pdf.PDF_file.url }}" type="application/pdf">View schedule</a>
+    </div>
 {% endblock content %}
