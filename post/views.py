@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import PDFDocumentForm
+from .forms import DocumentForm
 
 # Create your views here.
 
@@ -12,12 +12,12 @@ def schedule(request):
 
 def post_schedule(request):
     if request.method == "POST":
-        form = PDFDocumentForm(request.POST, request.FILES)
+        form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponse("Successfully posted!!")
+            return redirect("page-index")
     else:
-        form = PDFDocumentForm()
+        form = DocumentForm()
 
-    return render(request, "post/post_pdf.html", {'form': form})
+    return render(request, "post/post_document.html", {'form': form})
     

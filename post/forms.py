@@ -1,7 +1,7 @@
 from django import forms
-from .models import PDFDocument
+from .models import UploadDocument
 
-class PDFDocumentForm(forms.ModelForm):
+class DocumentForm(forms.ModelForm):
     class Meta:
-        model = PDFDocument
-        fields = ["Description", "PDF"]
+        model = UploadDocument
+        fields = ["Description", "File"]
