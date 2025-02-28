@@ -23,10 +23,10 @@ def register(request):
 @login_required
 def profile(request):
     target = UploadDocument.objects.last().File
-    name = User.username
+    name = request.user.username
     schedule = []
     # reading csv file
-    with target.open('r') as csvfile:
+    with target.open(mode='r') as csvfile:
         csvreader = csv.reader(csvfile)
 
         for row in csvreader:
