@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from post.models import PDFDocument
+from post.models import UploadDocument
 
 
 # Create your views here.
 def display_schedule(request):
-    p = PDFDocument.objects.all()
+    pdf = UploadDocument.objects.last()
     context = {
-        'photo':p
+        'pdf':pdf
         }
     return render(request, 'schedule/schedule.html', context)

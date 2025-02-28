@@ -1,7 +1,9 @@
-{% extends "post/index.html" %}
+{% extends "schedule/base.html" %}
 {% load static %}
 {% block content %}
-    <div>
-        <a href="{{ pdf.PDF_file.url }}" type="application/pdf">View schedule</a>
+    <div class="content-section">
+        <em>Click view schedule</em>
+        <br></br>
+        <a href="{{ pdf.File.url }}" type="application/pdf">View schedule</a>
     </div>
 {% endblock content %}

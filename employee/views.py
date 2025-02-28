@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .forms import UserRegisterForm
 from post.models import UploadDocument
 import csv
+from django.core.files import File
 
 def register(request):
     if request.method == "POST":
@@ -21,23 +22,12 @@ def register(request):
 
 @login_required
 def profile(request):
-    # csv file name
-    filename = UploadDocument.objects.last().File.url
-
-    # initializing the titles and rows list
-    # fields = []
-    # rows = []
+    target = UploadDocument.objects.last().File
     name = User.username
     schedule = []
     # reading csv file
-    with open(filename) as csvfile:
-        # creating a csv reader object
+    with target.open('r') as csvfile:
         csvreader = csv.reader(csvfile)
-
-        # extracting field names through first row
-        fields = next(csvreader)
-
-        # extracting each data row one by one
 
         for row in csvreader:
             for i in range(len(row)):

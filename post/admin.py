@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import PDFDocument
+from .models import UploadDocument
 # Register your models here.
-admin.site.register(PDFDocument)
+admin.site.register(UploadDocument)
