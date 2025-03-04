@@ -1,9 +1,5 @@
 __pycache__/
 *.pyc
 *:Zone.Identifier
-mysite/__pycache__/urls.cpython-312.pyc
 
-mysite/__pycache__/urls.cpython-312.pyc
-post/__pycache__/admin.cpython-312.pyc
-post/__pycache__/models.cpython-312.pyc
-post/__pycache__/views.cpython-312.pyc
+db.sqlite3
