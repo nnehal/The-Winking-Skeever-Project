@@ -22,35 +22,40 @@
         <header class="site-header">
             <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
                 <div class="container">
-                <a class="navbar-brand mr-4" href="/">The Winking Skeever</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                    <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="/">Home</a>
-                    <a class="nav-item nav-link" href="/schedule/">Schedule</a>
+                    <a class="navbar-brand mr-4" href="/">The Winking Skeever</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarToggle">
+                        <div class="navbar-nav mr-auto">
+                            {% if user.is_authenticated %}
+                                <a class="nav-item nav-link" href="{% url 'page-profile' %}">Profile</a>
+                            {% endif %}
+                            <a class="nav-item nav-link" href="/">Home</a>
+                            <a class="nav-item nav-link" href="{% url 'page-schedule' %}">Schedule</a>
+                        </div>
+                        <!-- Navbar Right Side -->
+                        <div class="navbar-nav">
+                            {% if user.is_authenticated %}
+                                <form action="{% url 'page-logout' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-light">Logout</button>
+                                </form>
+                                
+                            {% else %}
+                                <a class="nav-item nav-link" href="{% url 'page-login' %}">Login</a>
+                                <a class="nav-item nav-link" href="/register/">Register</a>
+                            {% endif %}
+                        </div>
                     </div>
-                    <!-- Navbar Right Side -->
-                    <div class="navbar-nav">
-                        {% if user.is_authenticated %}
-                            <form action="{% url 'page-logout' %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-outline-light">Logout</button>
-                            </form>
-                        {% else %}
-                            <a class="nav-item nav-link" href="{% url 'page-login' %}">Login</a>
-                            <a class="nav-item nav-link" href="/register/">Register</a>
-                        {% endif %}
-                    </div>
-                </div>
                 </div>
             </nav>
         </header>
         <main role="main" class="container">
             <div class="row">
               <div class="col-md-8">
-                {% block content %}{% endblock content %}
+                {% block content %}
+                {% endblock content %}
               </div>
             </div>
         </main>

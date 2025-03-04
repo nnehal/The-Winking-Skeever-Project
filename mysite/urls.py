@@ -25,8 +25,8 @@ from django.conf import settings
 urlpatterns = [
 
     path('', post_views.index, name='page-index'),
-    path('post/', post_views.post_schedule, name='"page-postschedule"'),
-    path('profile/', employee_views.profile, name='"page-profile"'),
+    path('post/', post_views.post_schedule, name='page-postschedule'),
+    path('profile/', employee_views.profile, name='page-profile'),
     path('schedule/', include('schedule.urls')),
     path('register/', employee_views.register, name='page-register'),
     path('login/', auth_views.LoginView.as_view(template_name='employee/login.html'), name='page-login'),
