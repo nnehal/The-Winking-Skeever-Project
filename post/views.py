@@ -11,7 +11,7 @@ def schedule(request):
     return render(request, "post/schedule.html")
 
 def post_schedule(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.user.role == "admin":
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()

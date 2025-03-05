@@ -12,9 +12,21 @@
         </div>
         <!-- FORM HERE -->
     </div>
-    <p>
-      {% for day in schedule %}
-        <h3>{{ day }}</h3>
-      {% endfor %}
-    </p>
+    <div class="media-body content-section">
+      <style>
+        table, th, td {
+          border:1px solid black;
+        }
+        tr:hover {background-color: #D6EEEE;}
+        </style>        
+        <h2>This Week Schedule</h2>
+        
+        <table style="width:100%">
+          <tr>
+            {% for day in schedule %}
+            <td>{{day}}</td>
+            {% endfor %}
+          </tr>
+        </table>
+    </div>
 {% endblock content %}
