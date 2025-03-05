@@ -1,9 +1,15 @@
-{% extends "schedule/base.html" %}
+{% extends "employee/base.html" %}
 {% load static %}
 {% block content %}
     <div class="content-section">
         <em>Click view schedule</em>
         <br></br>
         <a href="{{ pdf.File.url }}" type="application/pdf">View schedule</a>
+    </div>
+
+    <div>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'page-postschedule' %}">Click here to post new schedule.</a>
+        {% endif %}
     </div>
 {% endblock content %}
