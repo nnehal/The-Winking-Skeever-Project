@@ -32,28 +32,23 @@ def profile(request):
         for row in csvreader:
             for i in range(len(row)):
                 if(name == row[i].strip().title()):
-                    time = row[0]
+                    shift = row[0]
                     match(i):
                         case 1:
-                            schedule.append(time + " Monday")
+                            schedule.append(shift + " Monday")
                         case 2:
-                            schedule.append(time + " Tuesday")
+                            schedule.append(shift + " Tuesday")
                         case 3:
-                            schedule.append(time + " Wednesday")
+                            schedule.append(shift + " Wednesday")
                         case 4:
-                            schedule.append(time + " Thursday")
+                            schedule.append(shift + " Thursday")
                         case 5:
-                            schedule.append(time + " Friday")
+                            schedule.append(shift + " Friday")
                         case 6:
-                            schedule.append(time + " Saturday")
+                            schedule.append(shift + " Saturday")
                         case 7:
-                            schedule.append(time + " Sunday")
+                            schedule.append(shift + " Sunday")
                         case _:
                             print("Go HOME!!\n")
 
-            
-
-    context = {
-        "schedule": schedule
-    }
-    return render(request, "employee/profile.html", context)
+    return render(request, "employee/profile.html", {"schedule": schedule})

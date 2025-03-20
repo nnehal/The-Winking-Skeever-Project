@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'phonenumber_field',
     'crispy_forms',
     'crispy_bootstrap4',
     'employee.apps.EmployeeConfig',
