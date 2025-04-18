@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from .forms import UserRegisterForm
 from post.models import UploadDocument
 import csv
-from django.core.files import File
 
 def register(request):
     if request.method == "POST":
@@ -20,13 +18,10 @@ def register(request):
 
     return render(request, 'employee/register.html', {"form": form})
 
-@login_required
-def profile(request):
-    target = UploadDocument.objects.last().File
-    name = request.user.username
-    schedule = []
+def parse_csv(csv_file, name):
+    schedule = {}
     # reading csv file
-    with target.open(mode='r') as csvfile:
+    with csv_file.open(mode='r') as csvfile:
         csvreader = csv.reader(csvfile)
 
         for row in csvreader:
@@ -35,20 +30,28 @@ def profile(request):
                     shift = row[0]
                     match(i):
                         case 1:
-                            schedule.append(shift + " Monday")
+                            schedule.update({"Monday": shift})
                         case 2:
-                            schedule.append(shift + " Tuesday")
+                            schedule.update({"Tuesday": shift})
                         case 3:
-                            schedule.append(shift + " Wednesday")
+                            schedule.update({"Wednesday": shift})
                         case 4:
-                            schedule.append(shift + " Thursday")
+                            schedule.update({"Thursday": shift})
                         case 5:
-                            schedule.append(shift + " Friday")
+                            schedule.update({"Friday": shift})
                         case 6:
-                            schedule.append(shift + " Saturday")
+                            schedule.update({"Saturday": shift})
                         case 7:
-                            schedule.append(shift + " Sunday")
+                            schedule.update({"Sunday": shift})
                         case _:
                             print("Go HOME!!\n")
+
+    return schedule
+
+@login_required
+def profile(request):
+    target = UploadDocument.objects.last().File
+    name = request.user.username
+    schedule = parse_csv(target, name)
 
     return render(request, "employee/profile.html", {"schedule": schedule})

@@ -23,8 +23,8 @@
         
         <table style="width:100%">
           <tr>
-            {% for day in schedule %}
-            <td>{{day}}</td>
+            {% for day, shift in schedule.items %}
+            <td>{{day}} : {{shift}}</td>
             {% endfor %}
           </tr>
         </table>
