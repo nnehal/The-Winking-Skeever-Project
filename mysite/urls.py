@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from employee import views as employee_views
-from post import views as post_views
+from schedule import views as schedule_views
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.conf.urls.static import static
@@ -24,8 +24,7 @@ from django.conf import settings
 
 urlpatterns = [
 
-    path('', post_views.index, name='page-index'),
-    path('post/', post_views.post_schedule, name='page-postschedule'),
+    path('', schedule_views.index, name='page-index'),
     path('profile/', employee_views.profile, name='page-profile'),
     path('schedule/', include('schedule.urls')),
     path('register/', employee_views.register, name='page-register'),

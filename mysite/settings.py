@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'employee.apps.EmployeeConfig',
-    'post.apps.PostConfig',
     'schedule.apps.ScheduleConfig',
     'django.contrib.admin',
     'django.contrib.auth',
