@@ -18,7 +18,7 @@ def register(request):
 
     return render(request, 'employee/register.html', {"form": form})
 
-def parse_csv(csv_file, name):
+def get_schedule_by_name(csv_file, name):
     schedule = {}
     # reading csv file
     with csv_file.open(mode='r') as csvfile:
@@ -52,6 +52,6 @@ def parse_csv(csv_file, name):
 def profile(request):
     target = UploadDocument.objects.last().File
     name = request.user.username
-    schedule = parse_csv(target, name)
+    schedule = get_schedule_by_name(target, name)
 
     return render(request, "employee/profile.html", {"schedule": schedule})
