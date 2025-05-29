@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
-from schedule.models import UploadDocument
 import csv
 
 def register(request):
@@ -18,10 +17,10 @@ def register(request):
 
     return render(request, 'employee/register.html', {"form": form})
 
-def get_schedule_by_name(csv_file, name):
+def get_schedule_by_name(csv_file_path, name):
     schedule = {}
     # reading csv file
-    with csv_file.open(mode='r') as csvfile:
+    with open(csv_file_path, mode='r') as csvfile:
         csvreader = csv.reader(csvfile)
 
         for row in csvreader:
@@ -50,7 +49,7 @@ def get_schedule_by_name(csv_file, name):
 
 @login_required
 def profile(request):
-    target = UploadDocument.objects.last().File
+    target = "static/schedule.csv"
     name = request.user.username
     schedule = get_schedule_by_name(target, name)
 

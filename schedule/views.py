@@ -14,12 +14,6 @@ def display_schedule(request):
     #     }
     return render(request, "schedule/schedule.html")
 
-def convert_file():
-    uploaded_file = UploadDocument.objects.last().File
-
-    df = pd.read_excel(uploaded_file)
-    df.to_html("static/posted_sched.html")
-    df.to_csv("static/schedule.csv", index=False, encoding="utf-8")
 
 def post_schedule(request):
     if request.method == "POST":
@@ -31,7 +25,6 @@ def post_schedule(request):
     else:
         form = DocumentForm()
     
-    convert_file()
 
     return render(request, "schedule/post_document.html", {'form': form})
 
