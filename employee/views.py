@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
+from .models import Profile
 import csv
+
 
 def register(request):
     if request.method == "POST":
@@ -19,7 +21,6 @@ def register(request):
 
 def get_schedule_by_name(csv_file_path, name):
     schedule = {}
-    # reading csv file
     with open(csv_file_path, mode='r') as csvfile:
         csvreader = csv.reader(csvfile)
 
@@ -52,5 +53,9 @@ def profile(request):
     target = "static/schedule.csv"
     name = request.user.username
     schedule = get_schedule_by_name(target, name)
+
+    curr_user_profile = request.user.profile
+    curr_user_profile.latest_schedule = schedule
+    curr_user_profile.save()
 
     return render(request, "employee/profile.html", {"schedule": schedule})
