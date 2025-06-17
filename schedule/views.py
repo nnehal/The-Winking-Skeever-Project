@@ -28,15 +28,3 @@ def post_schedule(request):
     
 
     return render(request, "schedule/post_document.html", {'form': form})
-
-def send_schedule(requests):
-    Users = get_user_model()
-    email_list = [user.email for user in Users.objects.all() if user.email]
-
-    send_mail(
-        "Test django email",
-        "here is a message",
-        "hello@gmai.com",
-        email_list,
-        fail_silently=False
-    )

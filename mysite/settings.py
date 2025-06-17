@@ -122,15 +122,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 # my settings
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,  'static')
-]
+# STATICFILES_DIRS = [
+
+#     # BASE_DIR / 'static',
+    
+#     # BASE_DIR.joinpath("static"),
+
+#     os.path.join(BASE_DIR,  'static')
+# ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'page-index'
 LOGIN_URL = 'page-login'
@@ -138,3 +144,13 @@ LOGIN_URL = 'page-login'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Settings for smtp
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'testdev729@gmail.com'
+EMAIL_HOST_PASSWORD = 'seqfrbdmntxnjqpe'
