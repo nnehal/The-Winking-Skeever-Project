@@ -1,11 +1,9 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import UploadDocument
-import pandas as pd
-from django.contrib.auth import get_user_model
 from employee.models import Profile
 from django.core.mail import send_mass_mail
-import csv
+import pandas as pd
 import pathlib
 
 def convert_file():
@@ -15,41 +13,35 @@ def convert_file():
     df.to_html("static/posted_sched.html")
     df.to_csv("static/schedule.csv", index=False, encoding="utf-8")
 
+def get_schedule():
+    return pathlib.Path(__file__).resolve().parent.parent / "static/schedule.csv"
 
-def parse_csv(filename) -> dict:
+
+def parse_csv(filename) -> tuple:
+    df = pd.read_csv(filename)
+    print(df)
     sleepInn = {}
     bwInn = {}
 
-    rows = []
-
-    with open(filename, 'r') as csvfile:
-        csvreader = csv.reader(csvfile)
-        for row in csvreader:
-            rows.append(row)
-
-        for i in range(1,8):
-            date_ = rows[0][i]
-            sleepInn [date_] = {"8am-4pm": rows[3][i], "4pm-12am": rows[4][i], "12am-8am": rows[5][i]}
-            bwInn[date_] = {"8am-4pm": rows[9][i], "4pm-12am": rows[11][i], "12am-8am": rows[12][i]}
-            
-    weekly_schedule = [sleepInn, bwInn]
+    for _date in df.columns[1:]:
+        sleepInn [_date] = ("8am-4pm", df[_date][2]), ("4pm-12am", df[_date][3]), ("12am-8am", df[_date][4])
+        bwInn [_date] = ("8am-4pm", df[_date][8]), ("4pm-12am", df[_date][10]), ("12am-8am", df[_date][11])
 
     return sleepInn, bwInn
 
-def get_nested_value(dict_obj, keys, default=None) -> set:
-    current = dict_obj
-    val = set()
+def get_nested_value(dict_obj, keys) -> set:
+    employee_names = set()
 
-    for key in keys:
-        more_dict = current.get(key, default)
-        val.add(more_dict.get("8am-4pm"))
-        val.add(more_dict.get("4pm-12am"))
-        val.add(more_dict.get("12am-8am"))
-    
-    return val
+    for _date in keys:
+        daily = dict_obj.get(_date, {})
+
+        for per_shift in daily:
+            shift, name = per_shift
+            employee_names.add(name)
+    return employee_names
 
 def send_schedule():
-    filename = pathlib.Path(__file__).resolve().parent.parent / "static/schedule.csv"
+    filename = get_schedule()
     si, bw = parse_csv(filename)
 
     keys = list(si.keys())
@@ -59,11 +51,11 @@ def send_schedule():
 
     emp_scheduled = emp_scheduled_si.union(emp_scheduled_bw)
 
+    print(emp_scheduled)
     Users = Profile.objects.all()
     email_list = []
     messages = []
     for emp in emp_scheduled:
-        print(emp)
         for u in Users:
             if emp == u.user.last_name:
                 email = {}
@@ -72,14 +64,10 @@ def send_schedule():
                 email["address"] = u.user.email
                 email_list.append(email)
 
-    # add sender email
     from_email = "testdev729@gmail.com"
     for email_data in email_list:
-        print(email_data["address"])
         messages.append((email_data["subject"], email_data["message"], from_email, [email_data["address"]]))
-    print(messages)
     send_mass_mail(messages, fail_silently=False)
-    # print(messages)
 
 
 
