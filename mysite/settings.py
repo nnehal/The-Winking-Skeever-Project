@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from dotenv import load_dotenv
 from pathlib import Path
 import os
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -125,18 +126,9 @@ STATIC_URL = '/static/'
 
 # my settings
 
-# STATICFILES_DIRS = [
-
-#     # BASE_DIR / 'static',
-    
-#     # BASE_DIR.joinpath("static"),
-
-#     os.path.join(BASE_DIR,  'static')
-# ]
-
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = BASE_DIR / 'media/' # os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = BASE_DIR / 'static/' #os.path.join(BASE_DIR, 'static')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'page-index'
 LOGIN_URL = 'page-login'
@@ -153,4 +145,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'testdev729@gmail.com'
-EMAIL_HOST_PASSWORD = 'seqfrbdmntxnjqpe'
+EMAIL_HOST_PASSWORD = os.getenv("API_KEY")

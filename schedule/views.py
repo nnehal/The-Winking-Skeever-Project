@@ -1,19 +1,17 @@
 from django.shortcuts import render, redirect
 from .forms import DocumentForm
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-
+from .models import UploadDocument
 
 def index(request):
     return render(request, "schedule/index.html")
 
 def display_schedule(request):
-    # schedule_file = "static/posted_sched.html"
-
-    # context = {
-    #     "file":schedule_file
-    #     }
-    return render(request, "schedule/schedule.html")
+    schedule_file = UploadDocument.objects.last
+    context = {
+        "file":schedule_file
+        }
+    return render(request, "schedule/schedule.html", context)
 
 
 def post_schedule(request):

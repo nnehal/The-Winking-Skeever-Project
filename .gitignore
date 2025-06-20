@@ -6,3 +6,4 @@ static/posted_sched.html
 .gitignore
 static/schedule.pdf
 static/schedule.csv
+.env
